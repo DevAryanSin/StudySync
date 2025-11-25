@@ -3,7 +3,8 @@
 # under `.netlify/next`.
 [build]
   base = "frontend"
-  command = "npm run build"
+  # Run the Next build, then copy the output into the plugin's expected folder
+  command = "npm run build && mkdir -p .netlify/next && cp -R .next .netlify/next"
   publish = ".netlify/next"
 
 # Build-time environment variables (used during Next.js build)
