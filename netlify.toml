@@ -1,0 +1,14 @@
+# Netlify configuration for Next.js app inside the `frontend` subdirectory.
+# This uses the Netlify Next plugin which produces the deployable output
+# under `.netlify/next`.
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = ".netlify/next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Notes:
+# - Install the plugin in the frontend folder: `npm install --save-dev @netlify/plugin-nextjs`
+# - Set runtime env vars (e.g. NEXT_PUBLIC_API_URL) in Netlify UI under Site → Settings → Build & deploy → Environment.
