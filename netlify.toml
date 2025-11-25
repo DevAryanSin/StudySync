@@ -6,8 +6,16 @@
   command = "npm run build"
   publish = ".netlify/next"
 
+# Build-time environment variables (used during Next.js build)
+[build.environment]
+  NEXT_PUBLIC_API_URL = "https://studysync-136760819044.us-central1.run.app"
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Production runtime environment (Netlify context)
+[context.production.environment]
+  NEXT_PUBLIC_API_URL = "https://studysync-136760819044.us-central1.run.app"
 
 # Notes:
 # - Install the plugin in the frontend folder: `npm install --save-dev @netlify/plugin-nextjs`

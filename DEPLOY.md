@@ -38,3 +38,9 @@ Deploying backend to Cloud Run (summary)
 Deploying frontend to Vercel
 
 - Connect repo to Vercel and set `NEXT_PUBLIC_API_URL` to your Cloud Run URL in the Vercel dashboard.
+
+Deploying frontend to Netlify
+
+- This repository includes a `netlify.toml` configured for the Next plugin and sets `NEXT_PUBLIC_API_URL` for both build-time and production in the file. Netlify will use that value during builds and at runtime.
+- If you prefer to set or override the value in the Netlify UI: open your site in Netlify → Site settings → Build & deploy → Environment → Environment variables, add `NEXT_PUBLIC_API_URL` with value `https://studysync-136760819044.us-central1.run.app`.
+- Ensure the `@netlify/plugin-nextjs` plugin is installed in the `frontend` folder before building on Netlify (see `netlify.toml` notes).
