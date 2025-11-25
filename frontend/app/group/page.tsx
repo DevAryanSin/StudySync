@@ -8,16 +8,16 @@ const dummyGroups = [
 
 export default function GroupListPage() {
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <header className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Groups</h1>
-          <p className="text-sm text-slate-600">
-             Join or create groups.
+          <h1 className="text-3xl font-bold text-slate-900">Study Groups</h1>
+          <p className="text-sm text-slate-600 mt-1">
+            Join a group to collaborate and learn together.
           </p>
         </div>
 
-        <button className="rounded-md border bg-blue-600 px-4 py-2 text-sm font-medium text-white">
+        <button className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition">
           + Create Group
         </button>
       </header>
@@ -27,13 +27,15 @@ export default function GroupListPage() {
           <Link
             key={g.id}
             href={`/group/${g.id}`}
-            className="flex items-center justify-between rounded-lg border bg-black p-4 shadow-sm hover:shadow-md transition"
+            className="block p-4 border border-slate-200 rounded-lg bg-white hover:shadow-md hover:border-blue-300 transition"
           >
-            <div>
-              <h2 className="font-semibold">{g.name}</h2>
-              <p className="text-xs text-slate-600">{g.subject}</p>
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="font-semibold text-slate-900">{g.name}</h2>
+                <p className="text-xs text-slate-600 mt-1">{g.subject}</p>
+              </div>
+              <p className="text-xs font-medium text-slate-500">{g.members} members</p>
             </div>
-            <p className="text-xs text-slate-500">{g.members} members</p>
           </Link>
         ))}
       </div>

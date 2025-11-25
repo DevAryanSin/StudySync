@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "StudySync",
-  description: "Peer study groups, mentorship, and quizzes in one place.",
+  description: "Collaborative study groups with AI-powered chat.",
 };
 
 export default function RootLayout({
@@ -25,8 +25,6 @@ export default function RootLayout({
             <div className="flex items-center gap-4 text-sm text-black font-medium ">
               <Link href="/home">Home</Link>
               <Link href="/group">Groups</Link>
-              <Link href="/alumini">Seniors</Link>
-              <Link href="/group/quiz">Login</Link>
             </div>
           </nav>
         </header>
