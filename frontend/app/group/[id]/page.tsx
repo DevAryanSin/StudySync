@@ -144,7 +144,7 @@ export default function GroupDetailsPage({ params }: { params: Promise<{ id: str
                                 onChange={(e) => setQuery(e.target.value)}
                                 placeholder="Type your question..."
                                 disabled={loading}
-                                className="flex-1 p-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-slate-100"
+                                className="flex-1 p-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-slate-100 bg-white text-slate-900"
                             />
                             <button
                                 type="submit"

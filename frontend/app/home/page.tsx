@@ -5,7 +5,7 @@ export default function HomePage() {
   return (
     <div className="space-y-8">
       <section className="text-center py-16">
-        <h1 className="text-5xl font-bold mb-4 text-slate-900">
+        <h1 className="text-5xl font-bold mb-4 text-blue-600">
           Welcome to StudySync
         </h1>
         <p className="text-lg text-slate-600 max-w-2xl mx-auto">
