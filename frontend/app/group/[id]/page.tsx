@@ -88,7 +88,7 @@ export default function GroupDetailsPage({ params }: { params: Promise<{ id: str
         <div className="max-w-4xl mx-auto p-4 space-y-6">
             {/* Header */}
             <div className="border-b border-slate-200 pb-4">
-                <h1 className="text-3xl font-bold text-slate-900">Group {id}</h1>
+                <h1 className="text-3xl font-bold text-white">Group {id}</h1>
                 <p className="text-sm text-slate-600 mt-1">Share files and chat with AI Assistant</p>
             </div>
 
