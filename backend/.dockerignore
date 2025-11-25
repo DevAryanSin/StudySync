@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+.env
+*.sqlite3
+*.log
+node_modules/
+dist/
+build/
+# Don't include local service account keys in images
+api/studysync-479305-b156cb056817.json

@@ -1,0 +1,25 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/campusconnect-backend:$SHORT_SHA', '.']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/campusconnect-backend:$SHORT_SHA']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud run deploy ${_SERVICE:-campusconnect-backend} \
+          --image gcr.io/$PROJECT_ID/campusconnect-backend:$SHORT_SHA \
+          --region ${_REGION:-us-central1} \
+          --platform managed \
+          --allow-unauthenticated \
+          --set-env-vars=PYTHONUNBUFFERED=1
+
+images:
+  - 'gcr.io/$PROJECT_ID/campusconnect-backend:$SHORT_SHA'
+
+substitutions:
+  _SERVICE: "campusconnect-backend"
+  _REGION: "us-central1"
