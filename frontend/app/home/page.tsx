@@ -5,7 +5,7 @@ export default function HomePage() {
   return (
     <div className="space-y-8">
       <section className="text-center py-16">
-        <h1 className="text-5xl font-bold mb-4 text-blue-600">
+        <h1 className="text-5xl font-bold mb-4 text-white">
           Welcome to StudySync
         </h1>
         <p className="text-lg text-slate-600 max-w-2xl mx-auto">
@@ -23,11 +23,11 @@ export default function HomePage() {
           </div>
           <h2 className="text-xl font-semibold mb-2 text-slate-900">Study Groups</h2>
           <p className="text-slate-600">
-            Join study groups to collaborate with peers and share learning resources.
+            Join study groups,upload files and chat with our AI assisstant to get instant answers
           </p>
         </Link>
 
-        <Link
+        {/* <Link
           href="/group"
           className="group block rounded-lg border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md hover:border-green-300 transition-all duration-300"
         >
@@ -37,8 +37,8 @@ export default function HomePage() {
           <h2 className="text-xl font-semibold mb-2 text-slate-900">AI Chatbot</h2>
           <p className="text-slate-600">
             Upload files and chat with our AI assistant to get instant answers.
-          </p>
-        </Link>
+          </p> */}
+        {/* </Link> */}
       </section>
     </div>
   );
