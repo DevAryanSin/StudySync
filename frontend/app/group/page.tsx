@@ -73,7 +73,6 @@ export default function GroupListPage() {
                 <h2 className="font-semibold text-slate-900">{g.name}</h2>
                 <p className="text-xs text-slate-600 mt-1">{g.subject}</p>
               </div>
-              <p className="text-xs font-medium text-slate-500">{g.members} members</p>
             </div>
           </Link>
         ))}

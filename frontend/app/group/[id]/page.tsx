@@ -26,7 +26,7 @@ export default function GroupDetailsPage({ params }: { params: Promise<{ id: str
 
         try {
             const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://studysync-136760819044.us-central1.run.app";
-            console.log("📤 Uploading file to:", `${apiUrl}/upload`);
+            console.log("Uploading file to:", `${apiUrl}/upload`);
 
             const res = await fetch(`${apiUrl}/upload`, {
                 method: "POST",
@@ -58,7 +58,7 @@ export default function GroupDetailsPage({ params }: { params: Promise<{ id: str
 
         try {
             const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://studysync-136760819044.us-central1.run.app";
-            console.log("🔍 Sending chat request");
+            console.log("Sending chat request");
 
             const res = await fetch(`${apiUrl}/chat`, {
                 method: "POST",
@@ -89,7 +89,7 @@ export default function GroupDetailsPage({ params }: { params: Promise<{ id: str
             {/* Header */}
             <div className="border-b border-slate-200 pb-4">
                 <h1 className="text-3xl font-bold text-slate-900">Group {id}</h1>
-                <p className="text-sm text-slate-600 mt-1">Share files and chat with your group</p>
+                <p className="text-sm text-slate-600 mt-1">Share files and chat with AI Assistant</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -192,8 +192,6 @@ export default function GroupDetailsPage({ params }: { params: Promise<{ id: str
                         <h3 className="font-semibold text-slate-900 mb-3 text-sm">Group Info</h3>
                         <div className="space-y-2 text-xs text-slate-600">
                             <p><span className="font-medium text-slate-900">ID:</span> {id}</p>
-                            <p><span className="font-medium text-slate-900">Members:</span> 12</p>
-                            <p><span className="font-medium text-slate-900">Topic:</span> Computer Science</p>
                         </div>
                     </div>
                 </div>

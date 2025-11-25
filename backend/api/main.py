@@ -30,20 +30,20 @@ class ChatBody(BaseModel):
 
 @app.get("/")
 def home():
-    return {"status": "ok", "message": "CampusConnect Backend is running! ✅"}
+    return {"status": "ok", "message": "CampusConnect Backend is running!"}
 
 
 @app.on_event("startup")
 async def startup_event():
     print("\n" + "="*60)
-    print("🚀 CampusConnect Backend Started Successfully!")
+    print("CampusConnect Backend Started Successfully!")
     print("="*60)
-    print(f"📍 Server running at: http://localhost:8000")
-    print(f"📋 Available endpoints:")
+    print(f"Server running at: http://localhost:8000")
+    print(f"Available endpoints:")
     print(f"   - GET  /                (Health check)")
     print(f"   - POST /upload         (Upload files to group)")
     print(f"   - POST /chat           (Chat with group files)")
-    print(f"🔧 Make sure your frontend .env.local has:")
+    print(f"Make sure your frontend .env.local has:")
     print(f"   NEXT_PUBLIC_API_URL=http://localhost:8000")
     print("="*60 + "\n")
 
