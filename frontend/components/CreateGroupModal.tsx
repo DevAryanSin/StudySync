@@ -29,7 +29,6 @@ export default function CreateGroupModal({ isOpen, onClose, onCreateGroup }: Cre
         members: 1,
       });
 
-      // Reset form
       setGroupName("");
       setSubject("");
       onClose();
@@ -45,18 +44,15 @@ export default function CreateGroupModal({ isOpen, onClose, onCreateGroup }: Cre
 
   return (
     <div>
-      {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black bg-opacity-50 z-40"
         onClick={onClose}
       />
 
-      {/* Modal */}
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl p-6 max-w-md w-full mx-4 z-50">
         <h2 className="text-2xl font-bold text-slate-900 mb-4">Create New Group</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Group Name */}
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
               Group Name
@@ -71,7 +67,6 @@ export default function CreateGroupModal({ isOpen, onClose, onCreateGroup }: Cre
             />
           </div>
 
-          {/* Subject */}
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
               Subject/Topic
@@ -86,7 +81,6 @@ export default function CreateGroupModal({ isOpen, onClose, onCreateGroup }: Cre
             />
           </div>
 
-          {/* Buttons */}
           <div className="flex gap-3 pt-4">
             <button
               type="button"

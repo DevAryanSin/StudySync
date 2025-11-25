@@ -200,46 +200,36 @@ def generate_answer(question: str, contexts: List[str]) -> str:
         return f"Error generating response: {str(e)}"
 
 
-# ---------------- MAIN PIPELINE ----------------
-
 def answer_question(group_id: str, question: str):
     total_start = time.time()
     print(f"\n--- Processing Query: '{question}' for Group: {group_id} ---")
 
     try:
-        # 1. Embed
         print("   [Pipeline] Step 1: Embedding question...")
         emb = embed_text(question)
         if not emb:
             print("   ❌ Failed to generate embeddings")
             return {"answer": "Error: Could not generate embeddings for your question.", "contexts": []}
 
-        # 2. Search
         print("   [Pipeline] Step 2: Searching vector index...")
-        # Note: Reduced top_k to 3 to improve speed
         chunks = search_vector(group_id, emb, top_k=3)
         print(f"   [Pipeline] Found {len(chunks)} chunks")
 
-        # 3. Fetch Context (The Slow Part)
         context_texts = []
         
         if chunks:
             print(f"   [Pipeline] Step 3: Retrieving text for {len(chunks)} chunks...")
             
-            # Optimization: We loop through chunks, but handle errors gracefully
             for i, chunk in enumerate(chunks):
                 datapoint_id = chunk["datapoint_id"]
 
-                # Fetch Metadata (Firestore) with robust fallbacks.
                 try:
                     found_txt = None
 
-                    # 1) Try direct document by datapoint_id
                     if firestore_client:
                         doc = firestore_client.collection(FIRESTORE_COLLECTION).document(datapoint_id).get()
                         if doc.exists:
                             metadata = doc.to_dict()
-                            # Construct GCS Path
                             chunk_group = metadata.get("group_id", group_id)
                             file_id = metadata.get("file_id")
                             if file_id:
@@ -249,11 +239,10 @@ def answer_question(group_id: str, question: str):
                                     txt = blob.download_as_text()
                                     found_txt = txt
                                     chunk["text"] = txt[:200] + "..."
-                                    print(f"      ✅ Chunk {i+1}: Retrieved {len(txt)} chars from {file_id} (via doc)")
+                                    print(f"      Chunk {i+1}: Retrieved {len(txt)} chars from {file_id} (via doc)")
                                 except Exception as _e:
-                                    print(f"      ⚠️ Chunk {i+1}: Failed to download blob at {gcs_path}: {_e}")
+                                    print(f"      Chunk {i+1}: Failed to download blob at {gcs_path}: {_e}")
 
-                    # 2) Fallback: try to find a document where file_id == datapoint_id
                     if not found_txt and firestore_client:
                         try:
                             q = firestore_client.collection(FIRESTORE_COLLECTION).where("file_id", "==", datapoint_id).limit(1).get()
@@ -267,13 +256,12 @@ def answer_question(group_id: str, question: str):
                                     txt = blob.download_as_text()
                                     found_txt = txt
                                     chunk["text"] = txt[:200] + "..."
-                                    print(f"      ✅ Chunk {i+1}: Retrieved {len(txt)} chars from {file_id} (via file_id query)")
+                                    print(f"      Chunk {i+1}: Retrieved {len(txt)} chars from {file_id} (via file_id query)")
                                 except Exception as _e:
-                                    print(f"      ⚠️ Chunk {i+1}: Failed to download blob at {gcs_path}: {_e}")
+                                    print(f"      Chunk {i+1}: Failed to download blob at {gcs_path}: {_e}")
                         except Exception as _e:
-                            print(f"      ⚠️ Chunk {i+1}: Firestore file_id query failed: {_e}")
+                            print(f"      Chunk {i+1}: Firestore file_id query failed: {_e}")
 
-                    # 3) Fallback: try to find a document that contains this datapoint in an array field (e.g. 'chunks')
                     if not found_txt and firestore_client:
                         try:
                             q2 = firestore_client.collection(FIRESTORE_COLLECTION).where("chunks", "array_contains", datapoint_id).limit(1).get()
@@ -287,13 +275,12 @@ def answer_question(group_id: str, question: str):
                                     txt = blob.download_as_text()
                                     found_txt = txt
                                     chunk["text"] = txt[:200] + "..."
-                                    print(f"      ✅ Chunk {i+1}: Retrieved {len(txt)} chars from {file_id} (via chunks array query)")
+                                    print(f"      Chunk {i+1}: Retrieved {len(txt)} chars from {file_id} (via chunks array query)")
                                 except Exception as _e:
-                                    print(f"      ⚠️ Chunk {i+1}: Failed to download blob at {gcs_path}: {_e}")
+                                    print(f"      Chunk {i+1}: Failed to download blob at {gcs_path}: {_e}")
                         except Exception as _e:
-                            print(f"      ⚠️ Chunk {i+1}: Firestore chunks array query failed: {_e}")
+                            print(f"      Chunk {i+1}: Firestore chunks array query failed: {_e}")
 
-                    # 4) Final fallback: scan GCS under group prefix to find matching datapoint file
                     if not found_txt:
                         try:
                             bucket = storage_client.bucket(GCS_CHUNKS_BUCKET)
@@ -306,18 +293,17 @@ def answer_question(group_id: str, question: str):
                                         txt = b.download_as_text()
                                         found_txt = txt
                                         chunk["text"] = txt[:200] + "..."
-                                        print(f"      ✅ Chunk {i+1}: Retrieved {len(txt)} chars from blob {b.name} (via GCS scan)")
+                                        print(f"      Chunk {i+1}: Retrieved {len(txt)} chars from blob {b.name} (via GCS scan)")
                                         break
                                     except Exception as _e:
-                                        print(f"      ⚠️ Chunk {i+1}: Failed to download blob {b.name}: {_e}")
+                                        print(f"      Chunk {i+1}: Failed to download blob {b.name}: {_e}")
                         except Exception as _e:
-                            print(f"      ⚠️ Chunk {i+1}: GCS scan failed: {_e}")
+                            print(f"      Chunk {i+1}: GCS scan failed: {_e}")
 
-                    # 5) If we found text, append it
                     if found_txt:
                         context_texts.append(found_txt)
                     else:
-                        print(f"      ⚠️ Chunk {i+1}: Document not found in Firestore and no matching blob found in GCS")
+                        print(f"      Chunk {i+1}: Document not found in Firestore and no matching blob found in GCS")
                 except Exception as e:
                     print(f"      ❌ Chunk {i+1}: Error retrieving context: {e}")
                     import traceback
@@ -329,7 +315,6 @@ def answer_question(group_id: str, question: str):
         else:
             print("   ⚠️ Warning: No chunks found in vector search")
 
-        # 4. Generate
         print("   [Pipeline] Step 4: Generating answer with Gemini...")
         answer = generate_answer(question, context_texts)
         

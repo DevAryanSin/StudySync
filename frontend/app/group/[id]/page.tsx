@@ -136,7 +136,6 @@ export default function GroupDetailsPage({ params }: { params: Promise<{ id: str
                             )}
                         </div>
 
-                        {/* Input Area */}
                         <form onSubmit={handleChat} className="border-t border-slate-200 p-3 flex gap-2 bg-white">
                             <input
                                 type="text"
@@ -144,7 +143,7 @@ export default function GroupDetailsPage({ params }: { params: Promise<{ id: str
                                 onChange={(e) => setQuery(e.target.value)}
                                 placeholder="Type your question..."
                                 disabled={loading}
-                                className="flex-1 p-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-slate-100 bg-white text-slate-900"
+                                className="flex-1 p-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-slate-100 bg-white text-white"
                             />
                             <button
                                 type="submit"
@@ -157,7 +156,6 @@ export default function GroupDetailsPage({ params }: { params: Promise<{ id: str
                     </div>
                 </div>
 
-                {/* Sidebar: File Upload */}
                 <div className="space-y-4">
                     <div className="border border-slate-200 rounded-lg bg-white shadow-sm p-4">
                         <h2 className="font-semibold text-slate-900 mb-3 text-sm">Upload Materials</h2>

@@ -22,7 +22,6 @@ export default function GroupListPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const generateGroupId = (): string => {
-    // Generate unique 3-digit ID following the pattern (123, 234, etc.)
     if (groups.length === 0) return "123";
     const maxId = Math.max(...groups.map((g) => parseInt(g.id)));
     return String(maxId + 1).padStart(3, "0");

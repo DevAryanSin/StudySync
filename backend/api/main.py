@@ -8,10 +8,9 @@ from .rag import answer_question
 
 app = FastAPI()
 
-# Add CORS middleware to allow frontend requests
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for development
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -30,7 +29,7 @@ class ChatBody(BaseModel):
 
 @app.get("/")
 def home():
-    return {"status": "ok", "message": "CampusConnect Backend is running!"}
+    return {"status": "ok", "message": "StudySync Backend is running!"}
 
 
 @app.on_event("startup")
