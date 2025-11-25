@@ -19,4 +19,6 @@ ENV PORT=8080
 
 EXPOSE ${PORT}
 
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "${PORT}"]
+# Use shell form so the `PORT` environment variable is expanded at container runtime
+# Cloud Run sets PORT; default was set above to 8080
+CMD uvicorn api.main:app --host 0.0.0.0 --port $PORT
